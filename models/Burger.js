@@ -7,6 +7,7 @@ const BurgerSchema = new mongoose.Schema({
     lastname: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    passwordConfirm: { type: String, required: true },
     postalcode: { type: String, required: true },
     city: { type: String, required: true },
     street: { type: String, nullable },

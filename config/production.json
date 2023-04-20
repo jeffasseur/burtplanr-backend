@@ -1,0 +1,5 @@
+{
+    "database": {
+        "db": "mongodb+srv://jeffasseur:Fejfass.12@cluster-buurtplanr.tewedxd.mongodb.net/?retryWrites=true&w=majority"
+    }
+}

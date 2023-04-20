@@ -4,20 +4,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const { MongoClient } = require('mongodb');
+const production = require('./config/production.json');
 
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const projectsRouter = require('./routes/project');
+const burgersRouter = require('./routes/burgers');
+const projectsRouter = require('./routes/projects');
+
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb+srv://jeffasseur:<password>@buurtplanr.tvkj96s.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect(production.database.db);
 
 const app = express();
 
-const corsOptions = {
-  origin: 'http://localhost:3000',
-}
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+// }
 app.use(cors());
 
 // view engine setup
@@ -32,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/burgers', burgersRouter);
 app.use('/projects', projectsRouter);
 
 // catch 404 and forward to error handler

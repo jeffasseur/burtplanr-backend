@@ -24,16 +24,23 @@ const register = async (req, res) => {
 
     //password handling
     if (req.body.password === req.body.passwordConfirm) {
+
         burger.password = req.body.password
 
         //generate salt to hash password
         const salt = await bcrypt.genSalt(10);
 
         //set user password to hashed password
-        burger.password = await bcrypt.hash(user.password, salt);
+        burger.password = await bcrypt.hash(burger.password, salt);
 
         //save user
-        burger.save();
+        await burger.save();
+
+        let response = {
+            status: "success",
+            message: burger,
+        }
+        res.json(response);
     }
     else {
         let response = {
@@ -45,5 +52,5 @@ const register = async (req, res) => {
 };
 
 module.exports.index = index;
-module.exports.login = login;
+// module.exports.login = login;
 module.exports.register = register;

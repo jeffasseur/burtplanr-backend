@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const { MongoClient } = require('mongodb');
+// const { MongoClient } = require('mongodb');
 const production = require('./config/production.json');
 
 
@@ -14,14 +14,18 @@ const projectsRouter = require('./routes/projects');
 
 
 const mongoose = require('mongoose');
-mongoose.connect(production.database.db);
+try {
+  mongoose.connect(production.database.localdb);
+} catch (error) {
+  handleError(error);
+}
 
 const app = express();
 
-// const corsOptions = {
-//   origin: 'http://localhost:3000',
-// }
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000',
+}
+app.use(cors(corsOptions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

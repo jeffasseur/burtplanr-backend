@@ -15,6 +15,10 @@ const ProjectSchema = new mongoose.Schema({
     },
     border: {},
     fase: { type: String, default: "Wachten tot opstart ..." },
+    delete: {
+        isDeleted: { type: Boolean, default: false },
+        whenDeleted: { type: Date, default: null }
+    }
 });
 
 const Project = mongoose.model('Project', ProjectSchema);

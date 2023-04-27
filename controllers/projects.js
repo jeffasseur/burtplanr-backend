@@ -37,6 +37,22 @@ const addProject = async (req, res) => {
     res.json(response);
 }
 
+const updateProjectById = async (req, res) => {
+    let id = req.params.id;
+
+    let update = req.body;
+
+    let project = await Project.findByIdAndUpdate(id, update);
+
+    let response = {
+        status: "success",
+        message: "Project is updated.",
+        project: project
+    }
+    res.json(response);
+}
+
 module.exports.index = index;
 module.exports.addProject = addProject;
 module.exports.getProjectById = getProjectById;
+module.exports.updateProjectById = updateProjectById;

@@ -5,8 +5,13 @@ const projectController = require('./../controllers/projects');
 /* GET project page. */
 router.get('/', projectController.index);
 
+// GET project by id
 router.get('/:id', projectController.getProjectById);
 
-router.post('/', projectController.addProject);
+// Add new project
+router.post('/new', projectController.addProject);
+
+// update project by id
+router.put('/:id', projectController.updateProjectById);
 
 module.exports = router;

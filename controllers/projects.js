@@ -4,6 +4,19 @@ const index = (req, res) => {
     res.send('respond with all the projects');
 };
 
+const getProjectById = async (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+
+    const project = await Project.findById(id);
+
+    let response = {
+        status: "success",
+        message: project,
+    }
+    res.json(response);
+}
+
 const addProject = async (req, res) => {
     let project = new Project();
 
@@ -26,3 +39,4 @@ const addProject = async (req, res) => {
 
 module.exports.index = index;
 module.exports.addProject = addProject;
+module.exports.getProjectById = getProjectById;

@@ -5,9 +5,7 @@ const projectController = require('./../controllers/projects');
 /* GET project page. */
 router.get('/', projectController.index);
 
-router.get('/:id', (req, res) => {
-    res.send(req.params.id);
-});
+router.get('/:id', projectController.getProjectById);
 
 router.post('/', projectController.addProject);
 

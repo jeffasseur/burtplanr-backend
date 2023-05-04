@@ -1,7 +1,14 @@
 const Project = require('./../models/Project');
 
-const index = (req, res) => {
-    res.send('respond with all the projects');
+// index
+const index = async (req, res) => {
+    const projects = await Project.find();
+
+    let response = {
+        status: "success",
+        message: projects,
+    }
+    res.json(response);
 };
 
 const getProjectById = async (req, res) => {
@@ -61,7 +68,7 @@ const deleteProject = async (req, res) => {
         },
     }
 
-    const project = await Project.findByIdAndUpdate( id, softDelete, { returnDocument: 'after' } );
+    const project = await Project.findByIdAndUpdate(id, softDelete, { returnDocument: 'after' });
 
     let response = {
         status: "success",

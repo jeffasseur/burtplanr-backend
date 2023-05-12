@@ -23,6 +23,11 @@ const ProjectSchema = new mongoose.Schema({
         postalcode: { type: String, required: true },
         city: { type: String, required: true },
         street: { type: String },
+        coordinates: {
+            lat: {type: Number, required: true},
+            lng: {type: Number, required: true},
+            altitude: {type: Number, required: true, default: 2},
+        },
     },
     border: {},
     fase: { type: String, default: "Wachten tot opstart" },

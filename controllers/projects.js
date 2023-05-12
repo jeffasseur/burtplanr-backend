@@ -6,7 +6,7 @@ const index = async (req, res) => {
 
     let response = {
         status: "success",
-        message: projects,
+        data: projects,
     }
     res.json(response);
 };

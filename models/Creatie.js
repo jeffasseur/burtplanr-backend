@@ -5,15 +5,13 @@ const CreatieSchema = new mongoose.Schema({
     id: Number,
     projec_id: Number,
     user_id: Number,
-    creation: {
-        [
-            {
-                lat: { type: Number, required: true },
-                lng: { type: Number, required: true },
-                modeltype: { type: String, required: true },
-            }
-        ]
-    },
+    creation: [
+        {
+            lat: { type: Number, required: true },
+            lng: { type: Number, required: true },
+            modeltype: { type: String, required: true },
+        },
+    ],
     modelTypes: { type: Array, required: true },
 
 });

@@ -1,6 +1,0 @@
-{
-    "database": {
-        "db": "mongodb+srv://jeffasseur:Fejfass.12@cluster-buurtplanr.tewedxd.mongodb.net/?retryWrites=true&w=majority",
-        "localdb": "mongodb://127.0.0.1:27017/buurtplanr"
-    }
-}

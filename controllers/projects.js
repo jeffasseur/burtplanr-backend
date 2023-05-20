@@ -1,0 +1,85 @@
+const Project = require('./../models/Project');
+
+// index
+const index = async (req, res) => {
+    const projects = await Project.find();
+
+    let response = {
+        status: "success",
+        data: projects,
+    }
+    res.json(response);
+};
+
+const getProjectById = async (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+
+    const project = await Project.findById(id);
+
+    let response = {
+        status: "success",
+        message: project,
+    }
+    res.json(response);
+}
+
+const addProject = async (req, res) => {
+    let project = new Project();
+
+    project.title = req.body.title;
+    project.description = req.body.description;
+    project.dateOfStart = req.body.dateOfStart;
+    project.dateOfEnd = req.body.dateOfEnd;
+    project.location = req.body.location;
+    // project.border = req.body.border;
+
+    await project.save();
+
+    let response = {
+        status: "success",
+        message: "Project added.",
+        devMessage: project,
+    }
+    res.json(response);
+}
+
+const updateProjectById = async (req, res) => {
+    let id = req.params.id;
+    let update = req.body;
+
+    let project = await Project.findByIdAndUpdate(id, update);
+
+    let response = {
+        status: "success",
+        message: "Project is updated.",
+        project: project
+    }
+    res.json(response);
+}
+
+const deleteProject = async (req, res) => {
+    const id = req.params.id;
+
+    let softDelete = {
+        delete: {
+            isDeleted: true,
+            whenDeleted: Date.now()
+        },
+    }
+
+    const project = await Project.findByIdAndUpdate(id, softDelete, { returnDocument: 'after' });
+
+    let response = {
+        status: "success",
+        message: "Project is deleted",
+        project: project
+    }
+    res.json(response);
+}
+
+module.exports.index = index;
+module.exports.addProject = addProject;
+module.exports.getProjectById = getProjectById;
+module.exports.updateProjectById = updateProjectById;
+module.exports.deleteProject = deleteProject;

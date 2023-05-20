@@ -11,6 +11,7 @@ const production = require('./config/production.json');
 const indexRouter = require('./routes/index');
 const burgersRouter = require('./routes/burgers');
 const projectsRouter = require('./routes/projects');
+const creatiesRouter = require('./routes/creaties');
 
 
 const mongoose = require('mongoose');
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/burgers', burgersRouter);
 app.use('/projects', projectsRouter);
+app.use('/creaties', creatiesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,8 +1,14 @@
 const Burger = require('./../models/Burger');
 const bcrypt = require('bcrypt');
 
-const index = (req, res) => {
-    res.send('respond with a resource');
+const index = async (req, res) => {
+    const burgers = await Burger.find();
+
+    let response = {
+        status: "success",
+        data: burgers,
+    }
+    res.json(response);
 };
 
 const login = (req, res) => {

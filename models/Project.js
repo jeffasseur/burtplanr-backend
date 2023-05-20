@@ -24,9 +24,9 @@ const ProjectSchema = new mongoose.Schema({
         city: { type: String, required: true },
         street: { type: String },
         coordinates: {
-            lat: {type: Number, required: true},
-            lng: {type: Number, required: true},
-            altitude: {type: Number, required: true, default: 2},
+            lat: { type: Number, required: true },
+            lng: { type: Number, required: true },
+            altitude: { type: Number, required: true, default: 2 },
         },
     },
     border: {},
@@ -34,13 +34,19 @@ const ProjectSchema = new mongoose.Schema({
     /*
     *   Fase 0: Wachten tot opstart
     *   Fase 1: Informeren
-    *   Fase 2: Cocreatie
+    *   Fase 2: Cocreatie 
     *   Fase 3: Stemmen
     *   Fase 4: Vervolg
     */
     delete: {
         isDeleted: { type: Boolean, default: false },
         whenDeleted: { type: Date, default: null }
+    },
+    projectData: {
+        type: { type: String, required: true },
+        file: { type: String, required: false },
+        description: { type: String, required: false },
+        link: { type: String, required: false },
     }
 });
 

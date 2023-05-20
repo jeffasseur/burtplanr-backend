@@ -21,7 +21,7 @@ const addCreation = async (req, res) => {
     let projectId = req.params.projectId;
     let burgerId = req.params.burgerId;
     req.body.project = projectId;
-    req.body.burger = burgerId; //644a6b16421b1f1c65e81c4a
+    req.body.burger = burgerId;
 
     const creatie = new Creatie(req.body);
     await creatie.save();

@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const MONGODB = process.env.MONGO_DB;
-const production = require('./config/production.json');
+// const production = require('./config/production.json');
 
 
 const indexRouter = require('./routes/index');
@@ -18,13 +18,13 @@ const mongoose = require('mongoose');
 try {
   mongoose.connect(MONGODB);
 } catch (error) {
-  handleError(error);
+  handleError(MONGODB);
 }
 
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3002', 'http://localhost:3000']
+  origin: ['http://localhost:3002', 'http://localhost:3000', 'https://giddy-cummerbund-cod.cyclic.app/']
 }
 app.use(cors(corsOptions));
 

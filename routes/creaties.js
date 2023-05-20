@@ -6,13 +6,13 @@ const creatieController = require('../controllers/creatie');
 router.get('/', creatieController.index);
 
 // // GET project by id
-// router.get('/:id', creatieController.getProjectById);
+router.get('/:id', creatieController.getCreationById);
 
 // // Add new creation to project
 router.post('/new/:projectId/:burgerId', creatieController.addCreation);
 
 // // update project by id
-router.put('/:id', creatieController.updateCreatieById);
+router.put('/:id', creatieController.updateCreationById);
 
 // // Archive project
 // router.delete('/:id', creatieController.deleteProject);

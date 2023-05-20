@@ -16,12 +16,30 @@ const index = async (req, res) => {
     res.json(response);
 };
 
+// get creation by id
+const getCreationById = async (req, res) => {
+    const creatie = await Creatie.findOne(req.params.id).populate(['burger', 'project']);
+
+    if ( creatie ) {
+        let response = {
+            status: "success",
+            message: creatie
+        }
+        res.json(response);
+    }
+    else {
+        let response = {
+            status: "error",
+            message: "Geen creatie gevonden."
+        }
+        res.json(response);
+    }
+}
+
 // add creation to project
 const addCreation = async (req, res) => {
-    let projectId = req.params.projectId;
-    let burgerId = req.params.burgerId;
-    req.body.project = projectId;
-    req.body.burger = burgerId;
+    req.body.project = req.params.projectId;
+    req.body.burger = req.params.burgerId;
 
     const creatie = new Creatie(req.body);
     await creatie.save();
@@ -34,7 +52,7 @@ const addCreation = async (req, res) => {
 }
 
 // update creatie by id
-const updateCreatieById = async (req, res) => {
+const updateCreationById = async (req, res) => {
     let id = req.params.id;
     let update = req.body;
 
@@ -60,5 +78,6 @@ const updateCreatieById = async (req, res) => {
 }
 
 module.exports.index = index;
+module.exports.getCreationById = getCreationById;
 module.exports.addCreation = addCreation;
-module.exports.updateCreatieById = updateCreatieById;
+module.exports.updateCreationById = updateCreationById;

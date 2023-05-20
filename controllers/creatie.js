@@ -36,17 +36,27 @@ const addCreation = async (req, res) => {
 // update creatie by id
 const updateCreatieById = async (req, res) => {
     let id = req.params.id;
-    
     let update = req.body;
 
-    let creatie = await Creatie.findByIdAndUpdate(id, update);
+    let creatie = await Creatie.findById(id).populate( ['project', 'burger'] );
 
-    let response = {
-        status: "success",
-        message: "Creatie is updated.",
-        creatie: creatie
+    if ( creatie ) {
+        creatie = await Creatie.findByIdAndUpdate(id, update, {new: true});
+        let response = {
+            status: "success",
+            message: "Uw creatie is gewijzigd.",
+            data: creatie
+        }
+        res.json(response);
     }
-    res.json(response);
+    else {
+        let response = {
+            status: "error",
+            message: "Could not find this creation"
+        }
+        res.json(response);
+    }
+
 }
 
 module.exports.index = index;

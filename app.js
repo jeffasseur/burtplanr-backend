@@ -1,10 +1,10 @@
 const createError = require('http-errors');
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-// const { MongoClient } = require('mongodb');
 const production = require('./config/production.json');
 
 
@@ -16,7 +16,7 @@ const creatiesRouter = require('./routes/creaties');
 
 const mongoose = require('mongoose');
 try {
-  mongoose.connect(production.database.localdb);
+  mongoose.connect(process.env.MONGO_DB);
 } catch (error) {
   handleError(error);
 }

@@ -27,7 +27,32 @@ const getProjectById = async (req, res) => {
 const addProject = async (req, res) => {
     let project = new Project();
 
-    project = req.body;
+    project.title = req.body.title;
+    project.description = req.body.description;
+    project.dateOfStart = req.body.dateOfStart;
+    project.dateOfCreation = req.body.dateOfCreation;
+    project.dateOfPublication = req.body.dateOfPublication;
+    project.dateOfStartCocreation = req.body.dateOfStartCocreation;
+    project.dateOfEndCocreation = req.body.dateOfEndCocreation;
+    project.dateOfStartVote = req.body.dateOfStartVote;
+    project.dateOfEndVote = req.body.dateOfEndVote;
+    project.budget = req.body.budget;
+    project.banner = req.body.banner;
+    project.informatie = req.body.informatie;
+    project.document = req.body.document;
+    project.dateOfEnd = req.body.dateOfEnd;
+    project.location.postalcode = req.body.location.postalcode;
+    project.location.city = req.body.location.city;
+    project.location.street = req.body.location.street;
+    project.location.coordinates.lat = req.body.location.coordinates.lat;
+    project.location.coordinates.lng = req.body.location.coordinates.lng;
+    project.location.coordinates.altitude = req.body.location.coordinates.altitude;
+    project.border = req.body.border;
+    project.fase = req.body.fase;
+    project.projectData.type = req.body.projectData.type;
+    project.projectData.file = req.body.projectData.file;
+    project.projectData.description = req.body.projectData.description;
+    project.projectData.link = req.body.projectData.link;
 
     await project.save();
 

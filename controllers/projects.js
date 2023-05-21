@@ -26,23 +26,22 @@ const getProjectById = async (req, res) => {
 
 const addProject = async (req, res) => {
     
-    Project.create( req.body, (err, project) => {
-        if (err) {
-            console.log(err);
-            let response = {
-                status: 400,
-                message: "Het project toevoegen is mislukt."
-            }
-            res.json(response);
-        } else {
-            let response = {
-                status: "success",
-                message: "Project added.",
-                data: project,
-            }
-            res.json(response);
+    const project = await Project.create( req.body );
+
+    if( project ) {
+        let response = {
+            status: "success",
+            message: "Project is succesvol toegevoegd.",
+            data: project
         }
-    })
+        res.json(response);
+    } else {
+        let response = {
+            status: "error",
+            message: "Project toevoegen is mislukt."
+        }
+        res.json(response);
+    }
 
     // project.title = req.body.title;
     // project.description = req.body.description;

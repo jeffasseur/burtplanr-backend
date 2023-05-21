@@ -30,7 +30,7 @@ const ProjectSchema = new mongoose.Schema({
         },
     },
     border: {},
-    fase: { type: String, default: "Wachten tot opstart" },
+    fase: { type: String, default: "Fase 0: Wachten tot opstart" },
     /*
     *   Fase 0: Wachten tot opstart
     *   Fase 1: Informeren

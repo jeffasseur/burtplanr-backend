@@ -30,9 +30,20 @@ const addProject = async (req, res) => {
     project.title = req.body.title;
     project.description = req.body.description;
     project.dateOfStart = req.body.dateOfStart;
+    project.dateOfCreation = req.body.dateOfCreation;
+    project.dateOfPublication = req.body.dateOfPublication;
+    project.dateOfStartCocreation = req.body.dateOfStartCocreation;
+    project.dateOfEndCocreation = req.body.dateOfEndCocreation;
+    project.dateOfStartVote = req.body.dateOfStartVote;
+    project.dateOfEndVote = req.body.dateOfEndVote;
+    project.budget = req.body.budget;
+    project.banner = req.body.banner;
+    project.informatie = req.body.informatie;
+    project.document = req.body.document;
     project.dateOfEnd = req.body.dateOfEnd;
     project.location = req.body.location;
-    // project.border = req.body.border;
+    project.border = req.body.border;
+    project.projectData = req.body.projectData;
 
     await project.save();
 

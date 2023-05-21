@@ -41,14 +41,22 @@ const addCreation = async (req, res) => {
     req.body.project = req.params.projectId;
     req.body.burger = req.params.burgerId;
 
-    const creatie = new Creatie(req.body);
-    await creatie.save();
+    const creatie = await Creatie.create(req.body);
 
-    let response = {
-        status: "success",
-        data: creatie,
+    if( creatie ) {
+        let response = {
+            status: "success",
+            data: creatie,
+        }
+        res.json(response);
+    } else {
+        let response = {
+            status: "error",
+            message: "Het toevoegen van een creatie is mislukt."
+        }
+        res.json(response);
     }
-    res.json(response);
+
 }
 
 // update creatie by id

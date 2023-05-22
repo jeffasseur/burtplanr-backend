@@ -4,21 +4,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const MONGODB = process.env.MONGO_DB;
-// const production = require('./config/production.json');
 
 
 const indexRouter = require('./routes/index');
 const burgersRouter = require('./routes/burgers');
+const gemeentesRouter = require('./routes/gemeentes');
 const projectsRouter = require('./routes/projects');
 const creatiesRouter = require('./routes/creaties');
 
 
 const mongoose = require('mongoose');
+const mongoLocal = "mongodb://127.0.0.1:27017/buurtplanr";
 try {
-  mongoose.connect(MONGODB);
+  mongoose.connect(mongoLocal);
 } catch (error) {
-  handleError(MONGODB);
+  handleError(mongoLocal);
 }
 
 const app = express();
@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', indexRouter);
 app.use('/burgers', burgersRouter);
+app.use('/gemeentes', gemeentesRouter);
 app.use('/projects', projectsRouter);
 app.use('/creaties', creatiesRouter);
 

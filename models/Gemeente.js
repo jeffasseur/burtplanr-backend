@@ -8,6 +8,8 @@ const GemeenteSchema = new mongoose.Schema({
     city: { type: String, required: true },
     passcode: { type: String, required: true },
     email: { type: String, required: true },
+    password: { type: String, required: true },
+    admin: { type: Boolean, default: true }
 });
 
 const Gemeente = mongoose.model('Gemeente', GemeenteSchema);

@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const MONGODB = process.env.MONGO_DB;
+const MONGODB = 'mongodb://127.0.0.1:27017/buurtplanr';
 // const production = require('./config/production.json');
 
 

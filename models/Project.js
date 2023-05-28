@@ -26,7 +26,7 @@ const ProjectSchema = new mongoose.Schema({
         coordinates: {
             lat: { type: Number, required: true },
             lng: { type: Number, required: true },
-            altitude: { type: Number, required: true, default: 2 },
+            altitude: { type: Number, required: false, default: 2 },
         },
     },
     border: {},

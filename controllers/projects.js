@@ -32,7 +32,6 @@ const getProjectById = async (req, res) => {
 }
 
 const addProject = async (req, res) => {
-    
     const project = await Project.create( req.body );
 
     if( project ) {

@@ -6,7 +6,7 @@ const burgerController = require('./../controllers/users');
 router.get('/', burgerController.index);
 
 // login route
-// router.post('/login', burgerController.login);
+router.post('/login', burgerController.login);
 
 // register route
 router.post('/register', burgerController.register);

@@ -11,15 +11,56 @@ const index = async (req, res) => {
     res.json(response);
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    res.send('respond with a resource');
+    if ( email && password ) {
+        const burger = await Burger.findOne({ email: email });
+
+        if ( burger ) {
+            bcrypt.compare(password, burger.password, (err, result) => {
+                if ( result ) {
+                    let response = {
+                        status: "success",
+                        message: burger
+                    }
+                    res.json(response);
+                }
+                else {
+                    let response = {
+                        status: "error",
+                        message: "De combinatie van email en wachtwoord is onjuist."
+                    }
+                    res.json(response);
+                }
+            });
+        }
+        else {
+            let response = {
+                status: "error",
+                message: "De combinatie van email en wachtwoord is onjuist."
+            }
+            res.json(response);
+        }
+    }
+    else {
+        let response = {
+            status: "error",
+            message: "Vul alle velden in."
+        }
+        res.json(response);
+    }
 };
 
 const register = async (req, res) => {
-    // res.send('respond with a resource');
+    if ( await Burger.findOne({ email: req.body.email }) ) {
+        let response = {
+            status: "error",
+            message: "Dit emailadres is al in gebruik."
+        }
+        res.json(response);
+    }
 
     let burger = new Burger();
 
@@ -62,5 +103,5 @@ const register = async (req, res) => {
 };
 
 module.exports.index = index;
-// module.exports.login = login;
+module.exports.login = login;
 module.exports.register = register;

@@ -16,9 +16,9 @@ const creatiesRouter = require('./routes/creaties');
 const mongoose = require('mongoose');
 const mongoLocal = "mongodb://127.0.0.1:27017/buurtplanr";
 try {
-  mongoose.connect(mongoLocal);
+  mongoose.connect(process.env.MONGO_DB || mongoLocal);
 } catch (error) {
-  handleError(mongoLocal);
+  handleError(process.env.MONGO_DB || mongoLocal, error);
 }
 
 const app = express();

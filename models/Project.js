@@ -34,7 +34,7 @@ const ProjectSchema = new mongoose.Schema({
     /*
     *   Fase 0: Wachten tot opstart
     *   Fase 1: Informeren
-    *   Fase 2: Cocreatie 
+    *   Fase 2: Cocreatie
     *   Fase 3: Stemmen
     *   Fase 4: Vervolg
     */

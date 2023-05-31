@@ -40,6 +40,7 @@ const getCreationById = async (req, res) => {
 const addCreation = async (req, res) => {
     req.body.project = req.params.projectId;
     req.body.burger = req.params.burgerId;
+    req.body.dateOfCreation = Date.now();
 
     const creatie = await Creatie.create(req.body);
 

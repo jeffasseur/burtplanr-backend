@@ -24,7 +24,7 @@ try {
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3002', 'http://localhost:3000', 'https://giddy-cummerbund-cod.cyclic.app/']
+  origin: ['http://localhost:3002', 'http://localhost:3000', 'https://giddy-cummerbund-cod.cyclic.app/', 'http://127.0.0.1:3000', 'http://127.0.0.1:3002']
 }
 app.use(cors(corsOptions));
 

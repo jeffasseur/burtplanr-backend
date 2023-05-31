@@ -12,6 +12,9 @@ const index = async (req, res) => {
 };
 
 const login = (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
     res.send('respond with a resource');
 };
 
@@ -27,6 +30,7 @@ const register = async (req, res) => {
     burger.city = req.body.city;
     burger.street = req.body.street;
     burger.houseNumber = req.body.houseNumber;
+    burger.dateOfRegistration = Date.now();
 
     //password handling
     if (req.body.password === req.body.passwordConfirm) {

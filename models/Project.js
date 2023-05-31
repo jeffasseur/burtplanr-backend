@@ -8,17 +8,17 @@ const ProjectSchema = new mongoose.Schema({
     // Datum voor aanmaak project
     dateOfCreation: { type: Date, default: Date.now },
     // Datum voor publicatie project
-    dateOfPublication: { type: String, required: true }, // change to type Date
+    dateOfPublication: { type: Date, required: true }, // change to type Date
     // Cocreatie
-    dateOfStartCocreation: { type: String, required: true }, // change to type Date
-    dateOfEndCocreation: { type: String, required: true }, // change to type Date
+    dateOfStartCocreation: { type: Date, required: true }, // change to type Date
+    dateOfEndCocreation: { type: Date, required: true }, // change to type Date
     // Stemmen
-    dateOfStartVote: { type: String, required: true }, // change to type Date
-    dateOfEndVote: { type: String, required: true }, // change to type Date
+    dateOfStartVote: { type: Date, required: true, }, // change to type Date
+    dateOfEndVote: { type: Date, required: true }, // change to type Date
     budget: { type: Number, required: true },
     banner: { type: String, required: false },
     informatie: { type: String, required: true },
-    document: { type: String, required: false },
+    document: { type: Object, required: false },
     location: {
         postalcode: { type: String, required: true },
         city: { type: String, required: true },

@@ -13,35 +13,41 @@ const index = async (req, res) => {
 
 const getProjectById = async (req, res) => {
     let id = req.params.id;
-    console.log(id);
 
     const project = await Project.findById(id);
 
-    let response = {
-        status: "success",
-        message: project,
+    if( project ) {
+        let response = {
+            status: "success",
+            data: project,
+        }
+        res.status(200).json(response);
+    } else {
+        let response = {
+            status: "error",
+            message: "Project niet gevonden."
+        }
+        res.status(400).json(response);
     }
-    res.json(response);
 }
 
 const addProject = async (req, res) => {
-    let project = new Project();
+    const project = await Project.create( req.body );
 
-    project.title = req.body.title;
-    project.description = req.body.description;
-    project.dateOfStart = req.body.dateOfStart;
-    project.dateOfEnd = req.body.dateOfEnd;
-    project.location = req.body.location;
-    // project.border = req.body.border;
-
-    await project.save();
-
-    let response = {
-        status: "success",
-        message: "Project added.",
-        devMessage: project,
+    if( project ) {
+        let response = {
+            status: "success",
+            message: "Project is succesvol toegevoegd.",
+            data: project
+        }
+        res.json(response);
+    } else {
+        let response = {
+            status: "error",
+            message: "Project toevoegen is mislukt."
+        }
+        res.json(response);
     }
-    res.json(response);
 }
 
 const updateProjectById = async (req, res) => {

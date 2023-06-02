@@ -8,17 +8,17 @@ const ProjectSchema = new mongoose.Schema({
     // Datum voor aanmaak project
     dateOfCreation: { type: Date, default: Date.now },
     // Datum voor publicatie project
-    dateOfPublication: { type: String, required: true }, // change to type Date
+    dateOfPublication: { type: Date, required: true }, // change to type Date
     // Cocreatie
-    dateOfStartCocreation: { type: String, required: true }, // change to type Date
-    dateOfEndCocreation: { type: String, required: true }, // change to type Date
+    dateOfStartCocreation: { type: Date, required: true }, // change to type Date
+    dateOfEndCocreation: { type: Date, required: true }, // change to type Date
     // Stemmen
-    dateOfStartVote: { type: String, required: true }, // change to type Date
-    dateOfEndVote: { type: String, required: true }, // change to type Date
+    dateOfStartVote: { type: Date, required: true, }, // change to type Date
+    dateOfEndVote: { type: Date, required: true }, // change to type Date
     budget: { type: Number, required: true },
     banner: { type: String, required: false },
     informatie: { type: String, required: true },
-    document: { type: String, required: false },
+    document: { type: Object, required: false },
     location: {
         postalcode: { type: String, required: true },
         city: { type: String, required: true },
@@ -26,15 +26,15 @@ const ProjectSchema = new mongoose.Schema({
         coordinates: {
             lat: { type: Number, required: true },
             lng: { type: Number, required: true },
-            altitude: { type: Number, required: true, default: 2 },
+            altitude: { type: Number, required: false, default: 2 },
         },
     },
     border: {},
-    fase: { type: String, default: "Wachten tot opstart" },
+    fase: { type: String, default: "Fase 0: Wachten tot opstart" },
     /*
     *   Fase 0: Wachten tot opstart
     *   Fase 1: Informeren
-    *   Fase 2: Cocreatie 
+    *   Fase 2: Cocreatie
     *   Fase 3: Stemmen
     *   Fase 4: Vervolg
     */

@@ -4,27 +4,27 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-// const { MongoClient } = require('mongodb');
-const production = require('./config/production.json');
 
 
 const indexRouter = require('./routes/index');
 const burgersRouter = require('./routes/burgers');
+const gemeentesRouter = require('./routes/gemeentes');
 const projectsRouter = require('./routes/projects');
 const creatiesRouter = require('./routes/creaties');
 
 
 const mongoose = require('mongoose');
+const mongoLocal = "mongodb://127.0.0.1:27017/buurtplanr";
 try {
-  mongoose.connect(production.database.localdb);
+  mongoose.connect(process.env.MONGO_DB || mongoLocal);
 } catch (error) {
-  handleError(error);
+  handleError(process.env.MONGO_DB || mongoLocal, error);
 }
 
 const app = express();
 
 const corsOptions = {
-  origin: ['http://localhost:3002', 'http://localhost:3000', 'http://127.0.0.1:3002', 'http://127.0.0.1:3000', 'http://0.0.0.0']
+  origin: ['http://localhost:3002', 'http://localhost:3000', 'https://giddy-cummerbund-cod.cyclic.app/', 'http://127.0.0.1:3000', 'http://127.0.0.1:3002', 'https://buurtplanr.vercel.app', 'https://buurtplanr.com']
 }
 app.use(cors(corsOptions));
 
@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 app.use('/', indexRouter);
 app.use('/burgers', burgersRouter);
+app.use('/gemeentes', gemeentesRouter);
 app.use('/projects', projectsRouter);
 app.use('/creaties', creatiesRouter);
 

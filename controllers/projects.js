@@ -32,6 +32,9 @@ const getProjectById = async (req, res) => {
 }
 
 const addProject = async (req, res) => {
+    // check if project already exists on location
+        // check of je een radius kan zetten op basis van lat en lng
+
     const project = await Project.create( req.body );
 
     if( project ) {

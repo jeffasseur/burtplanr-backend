@@ -36,6 +36,11 @@ const getCreationById = async (req, res) => {
     }
 }
 
+// get creation by userId
+const getCreationByUserId = async (req, res) => {
+    res.send('get creation by userId');
+}
+
 // add creation to project
 const addCreation = async (req, res) => {
     req.body.project = req.params.projectId;
@@ -90,3 +95,4 @@ module.exports.index = index;
 module.exports.getCreationById = getCreationById;
 module.exports.addCreation = addCreation;
 module.exports.updateCreationById = updateCreationById;
+module.exports.getCreationByUserId = getCreationByUserId;

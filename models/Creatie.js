@@ -17,6 +17,8 @@ const CreatieSchema = new mongoose.Schema(
                 lat: { type: Number, required: true },
                 lng: { type: Number, required: true },
                 modeltype: { type: String, required: true },
+                width: { type: Number, required: false },
+                height: { type: Number, required: false },
             },
         ],
         modelTypes: { type: Array || Object, required: true },

@@ -11,6 +11,7 @@ const BurgerSchema = new mongoose.Schema({
     city: { type: String, required: true },
     street: { type: String, required: true },
     houseNumber: { type: String, required: true },
+    image: { type: String, required: false },
     dateOfRegistration: { type: Date, required: true },
 });
 

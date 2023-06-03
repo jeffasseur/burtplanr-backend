@@ -7,20 +7,26 @@ const index = async (req, res) => {
         .populate('project')
         .populate('burger');
 
-    console.log(creaties);
-
-    let response = {
-        status: "success",
-        data: creaties,
+    if (creaties) {
+        let response = {
+            status: "success",
+            data: creaties,
+        }
+        res.json(response);
+    } else {
+        let response = {
+            status: "error",
+            message: "Er zijn geen creaties gevonden."
+        }
+        res.json(response);
     }
-    res.json(response);
 };
 
 // get creation by id
 const getCreationById = async (req, res) => {
     const creatie = await Creatie.findOne(req.params.id).populate(['burger', 'project']);
 
-    if ( creatie ) {
+    if (creatie) {
         let response = {
             status: "success",
             message: creatie
@@ -44,7 +50,7 @@ const addCreation = async (req, res) => {
 
     const creatie = await Creatie.create(req.body);
 
-    if( creatie ) {
+    if (creatie) {
         let response = {
             status: "success",
             data: creatie,
@@ -65,10 +71,10 @@ const updateCreationById = async (req, res) => {
     let id = req.params.id;
     let update = req.body;
 
-    let creatie = await Creatie.findById(id).populate( ['project', 'burger'] );
+    let creatie = await Creatie.findById(id).populate(['project', 'burger']);
 
-    if ( creatie ) {
-        creatie = await Creatie.findByIdAndUpdate(id, update, {new: true});
+    if (creatie) {
+        creatie = await Creatie.findByIdAndUpdate(id, update, { new: true });
         let response = {
             status: "success",
             message: "Uw creatie is gewijzigd.",

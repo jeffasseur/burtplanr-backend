@@ -1,33 +1,31 @@
 const Gemeente = require('./../models/Gemeente');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
-    let nameInput = req.body.name;
+    let emailInput = req.body.email;
+    let postalcodeInput = req.body.postalcode;
     let passwordInput = req.body.password;
 
-    let gemeente = await Gemeente.findOne({name: nameInput});
-    if ( gemeente ) {
-        const validatePassword = await bcrypt.compare( passwordInput, gemeente.password );
-        if ( validatePassword ) {
-            let response = {
-                status: "success",
-                message: "Je bent ingelogd",
-                admin: true
+    let gemeente = await Gemeente.findOne({ email: emailInput });
+    if (gemeente && gemeente.postalcode == postalcodeInput) {
+        const validatePassword = await bcrypt.compare(passwordInput, gemeente.password, (err, result) => {
+            if (result) {
+                const token = jwt.sign({ email: gemeente.email, postalcode: gemeente.postalcode }, process.env.JWT_SECRET, { expiresIn: "4h" });
+                let response = {
+                    status: "success",
+                    message: gemeente,
+                    gemeente: true,
+                    token: token
+                }
+                res.json(response);
             }
-            res.json(response);
-        } else {
-            let response = {
-                status: "error",
-                message: "Inloggen mislukt",
-                admin: false
-            }
-            res.json(response);
-        }
+        });
     } else {
         let response = {
             status: "error",
             message: "inloggen mislukt",
-            admin: false
+            gemeente: false
         }
         res.json(response);
     }

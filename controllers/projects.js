@@ -2,6 +2,7 @@ const Project = require('./../models/Project');
 
 // index
 const index = async (req, res) => {
+
     const projects = await Project.find();
 
     let response = {
@@ -16,7 +17,7 @@ const getProjectById = async (req, res) => {
 
     const project = await Project.findById(id);
 
-    if( project ) {
+    if (project) {
         let response = {
             status: "success",
             data: project,
@@ -32,9 +33,9 @@ const getProjectById = async (req, res) => {
 }
 
 const addProject = async (req, res) => {
-    const project = await Project.create( req.body );
+    const project = await Project.create(req.body);
 
-    if( project ) {
+    if (project) {
         let response = {
             status: "success",
             message: "Project is succesvol toegevoegd.",

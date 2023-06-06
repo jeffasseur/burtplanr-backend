@@ -29,7 +29,12 @@ const ProjectSchema = new mongoose.Schema({
             altitude: { type: Number, required: false, default: 2 },
         },
     },
-    border: {},
+    border: [
+        {
+            lat: { type: Number, required: true },
+            lng: { type: Number, required: true },
+        }
+    ],
     fase: { type: String, default: "Fase 0: Wachten tot opstart" },
     /*
     *   Fase 0: Wachten tot opstart

@@ -1,22 +1,34 @@
 const Gemeente = require('./../models/Gemeente');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
-    let emailInput = req.body.email;
-    let postalcodeInput = req.body.postalcode;
-    let passwordInput = req.body.password;
+    const emailInput = req.body.email;
+    const postalcodeInput = req.body.postalcode;
+    const passwordInput = req.body.password;
 
-    let gemeente = await Gemeente.findOne({ email: emailInput });
+    const gemeente = await Gemeente.findOne({ email: emailInput });
     if (gemeente && gemeente.postalcode == postalcodeInput) {
         const validatePassword = await bcrypt.compare(passwordInput, gemeente.password, (err, result) => {
             if (result) {
-                const token = jwt.sign({ email: gemeente.email, postalcode: gemeente.postalcode }, process.env.JWT_SECRET, { expiresIn: "4h" });
+                req.session.authenticated = true;
+                req.session.gemeente = {
+                    id: gemeente._id,
+                    name: gemeente.name,
+                    email: gemeente.email,
+                    postalcode: gemeente.postalcode,
+                };
                 let response = {
                     status: "success",
                     message: gemeente,
-                    gemeente: true,
-                    token: token
+                    session: req.session
+                }
+                res.json(response);
+            } else if (err) {
+                res.json(err);
+            } else {
+                let response = {
+                    status: "error",
+                    message: "De combinatie van email en wachtwoord is onjuist."
                 }
                 res.json(response);
             }
@@ -71,5 +83,16 @@ const register = async (req, res) => {
     }
 };
 
+const logout = (req, res) => {
+    delete req.session.gemeente;
+    req.session.authenticated = false;
+    req.session.destroy();
+    res.json({
+        status: 'success',
+        message: 'Je bent uitgelogd.'
+    });
+};
+
 module.exports.login = login;
 module.exports.register = register;
+module.exports.logout = logout;

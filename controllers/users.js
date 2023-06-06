@@ -12,18 +12,28 @@ const index = async (req, res) => {
 };
 
 const login = async (req, res) => {
+    console.log(req.sessionID)
+
     const email = req.body.email;
     const password = req.body.password;
 
-    if ( email && password ) {
+    if (email && password) {
         const burger = await Burger.findOne({ email: email });
 
-        if ( burger ) {
+        if (burger) {
             bcrypt.compare(password, burger.password, (err, result) => {
-                if ( result ) {
+                if (result) {
+                    req.session.authenticated = true;
+                    req.session.burger = {
+                        id: burger._id,
+                        firstname: burger.firstname,
+                        email: burger.email,
+                        postalcode: burger.postalcode,
+                    };
                     let response = {
                         status: "success",
-                        message: burger
+                        message: burger,
+                        session: req.session
                     }
                     res.json(response);
                 }
@@ -54,7 +64,7 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-    if ( await Burger.findOne({ email: req.body.email }) ) {
+    if (await Burger.findOne({ email: req.body.email })) {
         let response = {
             status: "error",
             message: "Dit emailadres is al in gebruik."
@@ -102,6 +112,18 @@ const register = async (req, res) => {
     }
 };
 
+const logout = async (req, res) => {
+    delete req.session.burger;
+    req.session.authenticated = false;
+
+    let response = {
+        status: "success",
+        message: "U bent uitgelogd."
+    }
+    res.json(response);
+};
+
 module.exports.index = index;
 module.exports.login = login;
 module.exports.register = register;
+module.exports.logout = logout;

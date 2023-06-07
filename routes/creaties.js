@@ -9,6 +9,9 @@ router.get('/', adminRequired, creatieController.index);
 // // GET project by id
 router.get('/:id', adminRequired, creatieController.getCreationById);
 
+// // GET creatie by id and burger id
+router.get('/:id/:burgerId', creatieController.getCreationByIdAndBurgerId);
+
 // // Add new creation to project
 router.post('/new/:projectId/:burgerId', loginRequired, creatieController.addCreation);
 

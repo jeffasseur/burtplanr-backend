@@ -8,6 +8,9 @@ router.get('/', creatieController.index);
 // // GET project by id
 router.get('/:id', creatieController.getCreationById);
 
+// // GET creatie by id and burger id
+router.get('/:id/:burgerId', creatieController.getCreationByIdAndBurgerId);
+
 // // Add new creation to project
 router.post('/new/:projectId/:burgerId', creatieController.addCreation);
 

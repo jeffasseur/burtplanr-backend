@@ -29,7 +29,26 @@ const getCreationById = async (req, res) => {
     if (creatie) {
         let response = {
             status: "success",
-            message: creatie
+            data: creatie
+        }
+        res.json(response);
+    }
+    else {
+        let response = {
+            status: "error",
+            message: "Geen creatie gevonden."
+        }
+        res.json(response);
+    }
+}
+
+const getCreationByIdAndBurgerId = async (req, res) => {
+    const creatie = await Creatie.findOne({ burger: req.params.burgerId, _id: req.params.id }).populate(['burger', 'project']);
+
+    if (creatie) {
+        let response = {
+            status: "success",
+            data: creatie
         }
         res.json(response);
     }
@@ -94,5 +113,6 @@ const updateCreationById = async (req, res) => {
 
 module.exports.index = index;
 module.exports.getCreationById = getCreationById;
+module.exports.getCreationByIdAndBurgerId = getCreationByIdAndBurgerId;
 module.exports.addCreation = addCreation;
 module.exports.updateCreationById = updateCreationById;

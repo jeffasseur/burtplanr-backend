@@ -43,16 +43,16 @@ const getCreationById = async (req, res) => {
 }
 
 const getCreationByProjectIdAndBurgerId = async (req, res) => {
-    const creatie = await Creatie.findOne({ 'burger': req.params.burgerId, 'project': req.params.projectId }).populate(['burger', 'project']);
 
-    if (creatie) {
+    try {
+        const creatie = await Creatie.findOne({ 'burger': req.params.burgerId, 'project': req.params.projectId }).populate(['burger', 'project']);
+
         let response = {
             status: "success",
             data: creatie
         }
         res.json(response);
-    }
-    else {
+    } catch (err) {
         let response = {
             status: "error",
             message: "Geen creatie gevonden."

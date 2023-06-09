@@ -43,7 +43,7 @@ const getCreationById = async (req, res) => {
 }
 
 const getCreationByProjectIdAndBurgerId = async (req, res) => {
-    const creatie = await Creatie.findOne({ burger: req.params.burgerId, project: req.params.projectId }).populate(['burger', 'project']);
+    const creatie = await Creatie.findOne({ 'burger': req.params.burgerId, 'project': req.params.projectId }).populate(['burger', 'project']);
 
     if (creatie) {
         let response = {

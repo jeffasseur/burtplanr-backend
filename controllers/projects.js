@@ -22,7 +22,7 @@ const getProjectById = async (req, res) => {
             status: "success",
             data: project,
         }
-        res.status(200).json(response);
+        res.json(response);
     } else {
         let response = {
             status: "error",

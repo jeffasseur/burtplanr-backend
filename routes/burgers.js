@@ -6,6 +6,9 @@ const { loginRequired } = require('./../middleware/auth');
 /* GET users listing. */
 router.get('/', burgerController.index);
 
+// GET burger by id
+router.get('/id', loginRequired, burgerController.getBurgerById);
+
 // login route
 router.post('/login', burgerController.login);
 

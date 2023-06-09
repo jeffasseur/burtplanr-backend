@@ -12,14 +12,48 @@ const index = async (req, res) => {
     res.json(response);
 };
 
+const getBurgerById = (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+        res.json({
+            status: 'error',
+            message: 'Je bent niet ingelogd.'
+        });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+        if (err) {
+            res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
+
+        console.log(user);
+
+        const burger = await Burger.findById(user.id);
+        if (burger) {
+            let response = {
+                status: "success",
+                data: burger
+            }
+            res.json(response);
+        } else {
+            res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
+    });
+}
+
 const login = async (req, res) => {
-    console.log(req.sessionID);
 
     const email = req.body.email;
     const password = req.body.password;
 
     if (email && password) {
-        if (req.session.authenticated) {
+        if (req.headers.authorization) {
             let response = {
                 status: "error",
                 message: "U bent al ingelogd.",
@@ -129,6 +163,7 @@ const logout = async (req, res) => {
 };
 
 module.exports.index = index;
+module.exports.getBurgerById = getBurgerById;
 module.exports.login = login;
 module.exports.register = register;
 module.exports.logout = logout;

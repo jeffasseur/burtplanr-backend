@@ -25,8 +25,6 @@ try {
 
 const app = express();
 
-const memoryStore = new session.MemoryStore();
-
 const corsOptions = {
   origin: [
     'http://localhost:3002',

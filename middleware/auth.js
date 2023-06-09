@@ -26,14 +26,13 @@ const loginRequired = (req, res, next) => {
             });
         }
 
-        Burger.findOne({ _id: decoded.id }, (err, burger) => {
-            if (err || !burger) {
-                return res.json({
-                    status: 'error',
-                    message: 'Je hebt geen toegang.'
-                });
-            }
-        });
+        const burger = Burger.findById({ _id: decoded.id });
+        if (!burger) {
+            return res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
     });
 
     next();
@@ -41,20 +40,29 @@ const loginRequired = (req, res, next) => {
 
 // Auth for admin
 const adminRequired = (req, res, next) => {
-    if (!req.header.authorization) {
+    if (!req.headers.authorization) {
         return res.json({
             status: 'error',
             message: 'Je bent niet ingelogd.'
         });
     }
 
-    Gemeente.findById(req.session.gemeente.id);
-    if (!req.gemeente) {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
         return res.json({
             status: 'error',
-            message: 'Je bent niet ingelogd.'
+            message: 'Je hebt geen toegang.'
         });
     }
+
+    Gemeente.findOne({ _id: decoded.id }, (err, gemeente) => {
+        if (err || !gemeente) {
+            return res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
+    });
 
     next();
 };

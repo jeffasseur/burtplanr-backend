@@ -15,7 +15,7 @@ const index = async (req, res) => {
 const getProjectById = async (req, res) => {
     let id = req.params.id;
 
-    const project = await Project.findById(id);
+    const project = await Project.findOne({ '_id': id });
 
     if (project) {
         let response = {

@@ -15,15 +15,15 @@ const index = async (req, res) => {
 const getProjectById = async (req, res) => {
     let id = req.params.id;
 
-    const project = await Project.findOne({ '_id': id });
+    try {
+        const project = await Project.findOne({ '_id': id });
 
-    if (project) {
         let response = {
             status: "success",
             data: project,
         }
         res.json(response);
-    } else {
+    } catch (error) {
         let response = {
             status: "error",
             message: "Project niet gevonden."

@@ -1,5 +1,6 @@
 const Gemeente = require('./../models/Gemeente');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const login = async (req, res) => {
     const emailInput = req.body.email;
@@ -10,17 +11,11 @@ const login = async (req, res) => {
     if (gemeente && gemeente.postalcode == postalcodeInput) {
         const validatePassword = await bcrypt.compare(passwordInput, gemeente.password, (err, result) => {
             if (result) {
-                req.session.authenticated = true;
-                req.session.gemeente = {
-                    id: gemeente._id,
-                    name: gemeente.name,
-                    email: gemeente.email,
-                    postalcode: gemeente.postalcode,
-                };
+                const token = jwt.sign({ id: gemeente._id, admin: true }, process.env.JWT_SECRET, { expiresIn: '4h' });
                 let response = {
                     status: "success",
                     message: gemeente,
-                    session: req.session
+                    token: token,
                 }
                 res.json(response);
             } else if (err) {

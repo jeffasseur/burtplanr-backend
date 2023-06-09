@@ -1,19 +1,11 @@
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
-// const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
+const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
-const session = require('express-session');
-const store = new session.MemoryStore();
-const mongoose = require('mongoose');
-
-const oneDay = 1000 * 60 * 60 * 24;
-
-// dotenv.config({
-//   path: path.join(__dirname, '.env');
-// });
 
 
 const indexRouter = require('./routes/index');
@@ -22,6 +14,7 @@ const gemeentesRouter = require('./routes/gemeentes');
 const projectsRouter = require('./routes/projects');
 const creatiesRouter = require('./routes/creaties');
 
+dotenv.config();
 
 const mongoLocal = "mongodb://127.0.0.1:27017/buurtplanr";
 try {
@@ -31,6 +24,8 @@ try {
 }
 
 const app = express();
+
+const memoryStore = new session.MemoryStore();
 
 const corsOptions = {
   origin: [
@@ -50,15 +45,6 @@ const corsOptions = {
   ]
 }
 app.use(cors(corsOptions));
-
-// register session middleware
-app.use(session({
-  secret: (process.env.JWT_SECRET || 'BuurtplanrSecret2800'),
-  cookie: { maxAge: oneDay },
-  saveUninitialized: false,
-  resave: false,
-  store
-}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

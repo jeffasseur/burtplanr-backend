@@ -1,5 +1,6 @@
 const Burger = require('./../models/Burger');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const index = async (req, res) => {
     const burgers = await Burger.find();
@@ -12,29 +13,33 @@ const index = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    console.log(req.sessionID)
+    console.log(req.sessionID);
 
     const email = req.body.email;
     const password = req.body.password;
 
     if (email && password) {
+        if (req.session.authenticated) {
+            let response = {
+                status: "error",
+                message: "U bent al ingelogd.",
+                session: req.session
+            }
+            res.json(response);
+        }
+
         const burger = await Burger.findOne({ email: email });
 
         if (burger) {
             bcrypt.compare(password, burger.password, (err, result) => {
                 if (result) {
-                    req.session.authenticated = true;
-                    req.session.burger = {
-                        id: burger._id,
-                        firstname: burger.firstname,
-                        email: burger.email,
-                        postalcode: burger.postalcode,
-                    };
+                    const token = jwt.sign({ id: burger._id }, process.env.JWT_SECRET, { expiresIn: '4h' });
                     let response = {
                         status: "success",
-                        message: burger,
-                        session: req.session
+                        data: burger,
+                        token: token,
                     }
+                    console.log(req.session);
                     res.json(response);
                 }
                 else {

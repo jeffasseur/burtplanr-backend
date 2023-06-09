@@ -1,46 +1,63 @@
 const Burger = require('../models/Burger');
-const { dbSecretFields } = require('./../configs');
+const Gemeente = require('../models/Gemeente');
+const jwt = require('jsonwebtoken');
 
 
-const loginRequired = async (req, res, next) => {
-    if (!req.session.authenticated || !req.session.burger) {
+const loginRequired = (req, res, next) => {
+    if (!req.headers.authorization) {
         return res.json({
             status: 'error',
             message: 'Je bent niet ingelogd.'
         });
     }
-    req.burger = await Burger.findById(req.session.burger.id);
-    if (!req.burger) {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
         return res.json({
             status: 'error',
             message: 'Je bent niet ingelogd.'
         });
     }
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        if (err) {
+            return res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
+
+        Burger.findOne({ _id: decoded.id }, (err, burger) => {
+            if (err || !burger) {
+                return res.json({
+                    status: 'error',
+                    message: 'Je hebt geen toegang.'
+                });
+            }
+        });
+    });
+
     next();
 }
 
-const profile = async (req, res) => {
-    res.json({ burger: _.omit(req.burger.toObject(), dbSecretFields) });
-};
-
 // Auth for admin
-const adminRequired = async (req, res, next) => {
-    if (!req.session.authenticated || !req.session.gemeente) {
+const adminRequired = (req, res, next) => {
+    if (!req.header.authorization) {
         return res.json({
             status: 'error',
             message: 'Je bent niet ingelogd.'
         });
     }
-    req.gemeente = await Gemeente.findById(req.session.gemeente.id);
+
+    Gemeente.findById(req.session.gemeente.id);
     if (!req.gemeente) {
         return res.json({
             status: 'error',
             message: 'Je bent niet ingelogd.'
         });
     }
+
     next();
 };
 
 module.exports.loginRequired = loginRequired;
-module.exports.profile = profile;
 module.exports.adminRequired = adminRequired;

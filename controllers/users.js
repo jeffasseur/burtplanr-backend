@@ -31,14 +31,15 @@ const getBurgerById = (req, res) => {
 
         console.log(user);
 
-        const burger = await Burger.findById(user.id);
-        if (burger) {
+        try {
+            const burger = await Burger.findById(user.id);
+
             let response = {
                 status: "success",
                 data: burger
             }
             res.json(response);
-        } else {
+        } catch (error) {
             res.json({
                 status: 'error',
                 message: 'Je hebt geen toegang.'

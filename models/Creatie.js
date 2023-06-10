@@ -20,7 +20,7 @@ const CreatieSchema = new mongoose.Schema(
             },
         ],
         modelTypes: { type: Array || Object, required: true },
-        dateOfCreation: { type: Date, required: true },
+        dateOfCreation: { type: Date },
     }
 );
 

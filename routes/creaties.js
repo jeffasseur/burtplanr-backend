@@ -9,6 +9,9 @@ router.get('/', adminRequired, creatieController.index);
 // // GET creation by id
 router.get('/:id', adminRequired, creatieController.getCreationById);
 
+// GET all creations by burger id
+router.get('/:burgerId', loginRequired, creatieController.getCreationsByBurgerId);
+
 // // GET creatie by id and burger id
 router.get('/:id/:burgerId', loginRequired, creatieController.getCreationByIdAndBurgerId);
 

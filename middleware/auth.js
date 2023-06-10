@@ -18,7 +18,7 @@ const loginRequired = (req, res, next) => {
         });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             return res.json({
                 status: 'error',
@@ -26,8 +26,10 @@ const loginRequired = (req, res, next) => {
             });
         }
 
-        const burger = Burger.findById({ _id: decoded.id });
-        if (!burger) {
+        try {
+            await Burger.findById({ _id: decoded.id });
+            next();
+        } catch (err) {
             return res.json({
                 status: 'error',
                 message: 'Je hebt geen toegang.'
@@ -35,7 +37,6 @@ const loginRequired = (req, res, next) => {
         }
     });
 
-    next();
 }
 
 // Auth for admin

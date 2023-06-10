@@ -42,6 +42,26 @@ const getCreationById = async (req, res) => {
     }
 }
 
+const getCreationsByBurgerId = async (req, res) => {
+    const burgerId = req.params.burgerId;
+
+    try {
+        const creaties = await Creatie.find({ burger: burgerId });
+
+        let response = {
+            status: "success",
+            data: creaties
+        }
+        res.json(response);
+    } catch (err) {
+        let response = {
+            status: "error",
+            message: "Geen creaties gevonden."
+        }
+        res.json(response);
+    }
+};
+
 const getCreationByIdAndBurgerId = async (req, res) => {
     const creatie = await Creatie.findOne({ burger: req.params.burgerId, _id: req.params.id }).populate(['burger', 'project']);
 
@@ -113,6 +133,7 @@ const updateCreationById = async (req, res) => {
 
 module.exports.index = index;
 module.exports.getCreationById = getCreationById;
+module.exports.getCreationsByBurgerId = getCreationsByBurgerId;
 module.exports.getCreationByIdAndBurgerId = getCreationByIdAndBurgerId;
 module.exports.addCreation = addCreation;
 module.exports.updateCreationById = updateCreationById;

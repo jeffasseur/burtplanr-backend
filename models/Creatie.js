@@ -12,14 +12,14 @@ const CreatieSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Burger'
         },
-        creation: [
-            {
-                lat: { type: Number, required: true },
-                lng: { type: Number, required: true },
-                modeltype: { type: String, required: true },
+        creation: [{
+            latlng: {
+                x: { type: Number, required: true },
+                y: { type: Number, required: true },
+                z: { type: Number, required: true },
             },
-        ],
-        modelTypes: { type: Array || Object, required: true },
+            modelName: { type: String, required: true },
+        }],
         dateOfCreation: { type: Date },
     }
 );

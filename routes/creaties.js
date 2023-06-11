@@ -10,10 +10,10 @@ router.get('/', adminRequired, creatieController.index);
 router.get('/:id', adminRequired, creatieController.getCreationById);
 
 // GET all creations by burger id
-router.get('/:burgerId', loginRequired, creatieController.getCreationsByBurgerId);
+// router.get('/:burgerId', loginRequired, creatieController.getCreationsByBurgerId);
 
 // // GET creatie by id and burger id
-router.get('/:id/:burgerId', loginRequired, creatieController.getCreationByIdAndBurgerId);
+// router.get('/:id/:burgerId', loginRequired, creatieController.getCreationByIdAndBurgerId);
 
 // // GET creatie by id and burger id
 router.get('/:projectId/:burgerId', creatieController.getCreationByProjectIdAndBurgerId);

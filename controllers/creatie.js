@@ -62,24 +62,24 @@ const getCreationsByBurgerId = async (req, res) => {
     }
 };
 
-const getCreationByIdAndBurgerId = async (req, res) => {
-    const creatie = await Creatie.findOne({ burger: req.params.burgerId, _id: req.params.id }).populate(['burger', 'project']);
+// const getCreationByIdAndBurgerId = async (req, res) => {
+//     const creatie = await Creatie.findOne({ burger: req.params.burgerId, _id: req.params.id }).populate(['burger', 'project']);
 
-    if (creatie) {
-        let response = {
-            status: "success",
-            data: creatie
-        }
-        res.json(response);
-    }
-    else {
-        let response = {
-            status: "error",
-            message: "Geen creatie gevonden."
-        }
-        res.json(response);
-    }
-}
+//     if (creatie) {
+//         let response = {
+//             status: "success",
+//             data: creatie
+//         }
+//         res.json(response);
+//     }
+//     else {
+//         let response = {
+//             status: "error",
+//             message: "Geen creatie gevonden."
+//         }
+//         res.json(response);
+//     }
+// }
 
 const getCreationByProjectIdAndBurgerId = async (req, res) => {
 

@@ -19,7 +19,7 @@ const creatiesRouter = require('./routes/creaties');
 
 dotenv.config();
 
-const mongoLocal = "mongodb://127.0.0.1:27017/buurtplanr";
+const mongoLocal = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.1";
 try {
   mongoose.connect(process.env.MONGO_DB || mongoLocal);
   console.log('MongoDB connected');

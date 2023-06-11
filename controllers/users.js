@@ -126,13 +126,13 @@ const register = async (req, res) => {
     //password handling
     if (req.body.password === req.body.passwordConfirm) {
 
-        burger.password = req.body.password
+        const password = req.body.password
 
         //generate salt to hash password
         const salt = await bcrypt.genSalt(10);
 
         //set user password to hashed password
-        burger.password = await bcrypt.hash(burger.password, salt);
+        burger.password = await bcrypt.hash(password, salt);
 
         //save user
         await burger.save();
@@ -162,6 +162,12 @@ const logout = async (req, res) => {
     }
     res.json(response);
 };
+
+// delete user
+
+// update user
+
+// wachtwoord wijzigen
 
 module.exports.index = index;
 module.exports.getBurgerById = getBurgerById;

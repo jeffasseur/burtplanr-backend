@@ -53,7 +53,7 @@ const login = async (req, res) => {
     }
 };
 
-onst getBurgerById = (req, res) => {
+const getBurgerById = (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) {
         res.json({

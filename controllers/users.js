@@ -15,12 +15,12 @@ const login = async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    if ( email && password ) {
+    if (email && password) {
         const burger = await Burger.findOne({ email: email });
 
-        if ( burger ) {
+        if (burger) {
             bcrypt.compare(password, burger.password, (err, result) => {
-                if ( result ) {
+                if (result) {
                     let response = {
                         status: "success",
                         message: burger
@@ -90,7 +90,7 @@ const getBurgerById = (req, res) => {
 }
 
 const register = async (req, res) => {
-    if ( await Burger.findOne({ email: req.body.email }) ) {
+    if (await Burger.findOne({ email: req.body.email })) {
         let response = {
             status: "error",
             message: "Dit emailadres is al in gebruik."
@@ -140,4 +140,5 @@ const register = async (req, res) => {
 
 module.exports.index = index;
 module.exports.login = login;
+module.exports.getBurgerById = getBurgerById;
 module.exports.register = register;

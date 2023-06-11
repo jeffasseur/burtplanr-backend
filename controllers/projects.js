@@ -2,14 +2,20 @@ const Project = require('./../models/Project');
 
 // index
 const index = async (req, res) => {
-
-    const projects = await Project.find();
-
-    let response = {
-        status: "success",
-        data: projects,
+    try {
+        const projects = await Project.find();
+        let response = {
+            status: "success",
+            data: projects,
+        }
+        res.json(response);
+    } catch (err) {
+        let response = {
+            status: "error",
+            message: "Projecten opladen is niet gelukt."
+        }
+        res.json(response);
     }
-    res.json(response);
 };
 
 const getProjectById = async (req, res) => {

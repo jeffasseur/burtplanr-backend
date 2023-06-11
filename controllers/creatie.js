@@ -81,6 +81,25 @@ const getCreationByIdAndBurgerId = async (req, res) => {
     }
 }
 
+const getCreationByProjectIdAndBurgerId = async (req, res) => {
+
+    try {
+        const creatie = await Creatie.findOne({ 'burger': req.params.burgerId, 'project': req.params.projectId }).populate(['burger', 'project']);
+
+        let response = {
+            status: "success",
+            data: creatie
+        }
+        res.json(response);
+    } catch (err) {
+        let response = {
+            status: "error",
+            message: "Geen creatie gevonden."
+        }
+        res.json(response);
+    }
+}
+
 // add creation to project
 const addCreation = async (req, res) => {
     req.body.project = req.params.projectId;
@@ -133,7 +152,6 @@ const updateCreationById = async (req, res) => {
 
 module.exports.index = index;
 module.exports.getCreationById = getCreationById;
-module.exports.getCreationsByBurgerId = getCreationsByBurgerId;
-module.exports.getCreationByIdAndBurgerId = getCreationByIdAndBurgerId;
+module.exports.getCreationByProjectIdAndBurgerId = getCreationByProjectIdAndBurgerId;
 module.exports.addCreation = addCreation;
 module.exports.updateCreationById = updateCreationById;

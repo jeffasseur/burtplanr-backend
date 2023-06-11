@@ -15,6 +15,9 @@ router.get('/:burgerId', loginRequired, creatieController.getCreationsByBurgerId
 // // GET creatie by id and burger id
 router.get('/:id/:burgerId', loginRequired, creatieController.getCreationByIdAndBurgerId);
 
+// // GET creatie by id and burger id
+router.get('/:projectId/:burgerId', creatieController.getCreationByProjectIdAndBurgerId);
+
 // // Add new creation to project
 router.post('/new/:projectId/:burgerId', loginRequired, creatieController.addCreation);
 

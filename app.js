@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
+// const sessions = require('express-session');
+
+// const oneDay = 1000 * 60 * 60 * 24;
 
 
 const indexRouter = require('./routes/index');
@@ -45,6 +48,13 @@ const corsOptions = {
   ]
 }
 app.use(cors(corsOptions));
+
+// app.use(sessions({
+//   secret: production.env.JWT_SECRET,
+//   saveUninitialized: false,
+//   cookie: { maxAge: oneDay },
+//   resave: false,
+// }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

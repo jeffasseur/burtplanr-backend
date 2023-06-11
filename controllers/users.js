@@ -53,6 +53,42 @@ const login = async (req, res) => {
     }
 };
 
+onst getBurgerById = (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+        res.json({
+            status: 'error',
+            message: 'Je bent niet ingelogd.'
+        });
+    }
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+        if (err) {
+            res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
+
+        console.log(user);
+
+        try {
+            const burger = await Burger.findById(user.id);
+
+            let response = {
+                status: "success",
+                data: burger
+            }
+            res.json(response);
+        } catch (error) {
+            res.json({
+                status: 'error',
+                message: 'Je hebt geen toegang.'
+            });
+        }
+    });
+}
+
 const register = async (req, res) => {
     if ( await Burger.findOne({ email: req.body.email }) ) {
         let response = {

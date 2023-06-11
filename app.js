@@ -19,7 +19,9 @@ dotenv.config();
 const mongoLocal = "mongodb://127.0.0.1:27017/buurtplanr";
 try {
   mongoose.connect(process.env.MONGO_DB || mongoLocal);
+  console.log('MongoDB connected');
 } catch (error) {
+  console.log('MongoDB connection failed');
   handleError(process.env.MONGO_DB || mongoLocal, error);
 }
 

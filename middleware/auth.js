@@ -27,7 +27,7 @@ const loginRequired = (req, res, next) => {
         }
 
         try {
-            await Burger.findById({ _id: decoded.id });
+            await Burger.findById(decoded.id);
             next();
         } catch (err) {
             return res.json({

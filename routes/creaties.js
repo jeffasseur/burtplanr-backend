@@ -21,10 +21,10 @@ router.get('/:projectId/:burgerId', creatieController.getCreationByProjectIdAndB
 // // Add new creation to project
 router.post('/new/:projectId/:burgerId', loginRequired, creatieController.addCreation);
 
-// // update project by id
+// // update creation by id
 router.put('/:id', loginRequired, creatieController.updateCreationById);
 
-// // Archive project
-// router.delete('/:id', creatieController.deleteProject);
+// // Delete creation
+router.delete('/:id', creatieController.deleteCreation);
 
 module.exports = router;

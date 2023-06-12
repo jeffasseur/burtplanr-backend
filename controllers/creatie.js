@@ -106,6 +106,33 @@ const addCreation = async (req, res) => {
     req.body.burger = req.params.burgerId;
     req.body.dateOfCreation = Date.now();
 
+    try {
+        const checkCreatie = await Creatie.findOne({ 'burger': req.params.burgerId, 'project': req.params.projectId });
+
+        if (checkCreatie) {
+            let response = {
+                status: "error",
+                message: "U heeft al een creatie toegevoegd."
+            }
+            res.json(response);
+        }
+
+        const creatie = await Creatie.create(req.body);
+
+        let response = {
+            status: "success",
+            data: creatie,
+        }
+        res.json(response);
+
+    } catch (err) {
+        let response = {
+            status: "error",
+            message: "Er is iets mis gegaan."
+        }
+        res.json(response);
+    }
+
     const creatie = await Creatie.create(req.body);
 
     if (creatie) {
@@ -150,8 +177,30 @@ const updateCreationById = async (req, res) => {
 
 }
 
+// delete project by id
+const deleteCreation = async (req, res) => {
+    let id = req.params.id;
+
+    try {
+        await Creatie.findByIdAndDelete(id);
+
+        let response = {
+            status: "success",
+            message: "Uw creatie is verwijderd.",
+        }
+        res.json(response);
+    } catch (e) {
+        let response = {
+            status: "error",
+            message: "Er is geen creatie gevonden met dit id."
+        }
+        res.json(response);
+    }
+}
+
 module.exports.index = index;
 module.exports.getCreationById = getCreationById;
 module.exports.getCreationByProjectIdAndBurgerId = getCreationByProjectIdAndBurgerId;
 module.exports.addCreation = addCreation;
 module.exports.updateCreationById = updateCreationById;
+module.exports.deleteCreation = deleteCreation;

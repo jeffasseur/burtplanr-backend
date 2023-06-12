@@ -10,15 +10,16 @@ const loginRequired = (req, res, next) => {
             message: 'Je bent niet ingelogd.'
         });
     }
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) {
+    const jwtToken = req.headers.authorization.split(' ')[1];
+    console.log(jwtToken)
+    if (!jwtToken) {
         return res.json({
             status: 'error',
             message: 'Je bent niet ingelogd.'
         });
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+    jwt.verify(jwtToken, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             return res.json({
                 status: 'error',
@@ -27,8 +28,17 @@ const loginRequired = (req, res, next) => {
         }
 
         try {
-            await Burger.findById(decoded.id);
-            next();
+            const burger = Burger.findById(decoded);
+
+            if (burger) {
+                next();
+            } else {
+                return res.json({
+                    status: 'error',
+                    message: 'Je hebt geen toegang.'
+                });
+            }
+
         } catch (err) {
             return res.json({
                 status: 'error',
@@ -40,33 +50,33 @@ const loginRequired = (req, res, next) => {
 }
 
 // Auth for admin
-const adminRequired = (req, res, next) => {
-    if (!req.headers.authorization) {
-        return res.json({
-            status: 'error',
-            message: 'Je bent niet ingelogd.'
-        });
-    }
+// const adminRequired = (req, res, next) => {
+//     if (!req.headers.authorization) {
+//         return res.json({
+//             status: 'error',
+//             message: 'Je bent niet ingelogd.'
+//         });
+//     }
 
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) {
-        return res.json({
-            status: 'error',
-            message: 'Je hebt geen toegang.'
-        });
-    }
+//     const token = req.headers.authorization.split(' ')[1];
+//     if (!token) {
+//         return res.json({
+//             status: 'error',
+//             message: 'Je hebt geen toegang.'
+//         });
+//     }
 
-    Gemeente.findOne({ _id: decoded.id }, (err, gemeente) => {
-        if (err || !gemeente) {
-            return res.json({
-                status: 'error',
-                message: 'Je hebt geen toegang.'
-            });
-        }
-    });
+//     Gemeente.findOne({ _id: decoded.id }, (err, gemeente) => {
+//         if (err || !gemeente) {
+//             return res.json({
+//                 status: 'error',
+//                 message: 'Je hebt geen toegang.'
+//             });
+//         }
+//     });
 
-    next();
-};
+//     next();
+// };
 
 module.exports.loginRequired = loginRequired;
-module.exports.adminRequired = adminRequired;
+// module.exports.adminRequired = adminRequired;

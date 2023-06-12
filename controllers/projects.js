@@ -43,7 +43,8 @@ const getProjectById = async (req, res) => {
     } catch (error) {
         let response = {
             status: "error",
-            message: "Project niet gevonden."
+            message: "Project niet gevonden.",
+            error: error
         }
         res.json(response);
     }

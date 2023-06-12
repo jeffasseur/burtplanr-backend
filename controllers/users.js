@@ -172,5 +172,5 @@ const logout = async (req, res) => {
 module.exports.index = index;
 module.exports.getBurgerById = getBurgerById;
 module.exports.login = login;
-module.exports.register = register;
 module.exports.logout = logout;
+module.exports.register = register;

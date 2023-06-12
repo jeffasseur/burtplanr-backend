@@ -3,20 +3,37 @@ const Project = require('./../models/Project');
 // index
 const index = async (req, res) => {
 
-    const projects = await Project.find();
+    try {
+        const projects = await Project.find({});
 
-    let response = {
-        status: "success",
-        data: projects,
+        if (!projects) {
+            let response = {
+                status: "error",
+                message: "Er zijn geen projecten gevonden."
+            }
+            res.json(response);
+        }
+
+        let response = {
+            status: "success",
+            data: projects,
+        }
+        res.json(response);
     }
-    res.json(response);
+    catch (error) {
+        let response = {
+            status: "error",
+            message: "Er zijn geen projecten gevonden."
+        }
+        res.json(response);
+    }
 };
 
 const getProjectById = async (req, res) => {
     let id = req.params.id;
 
     try {
-        const project = await Project.findOne({ '_id': id });
+        const project = await Project.findById(id);
 
         let response = {
             status: "success",

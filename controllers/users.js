@@ -74,7 +74,7 @@ const login = async (req, res) => {
                         data: burger,
                         token: token,
                     }
-                    console.log(req.session);
+                    console.log(response);
                     res.json(response);
                 }
                 else {

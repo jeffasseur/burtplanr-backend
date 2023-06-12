@@ -14,7 +14,7 @@ const login = async (req, res) => {
                 const token = jwt.sign({ id: gemeente._id, admin: true }, process.env.JWT_SECRET, { expiresIn: '4h' });
                 let response = {
                     status: "success",
-                    message: gemeente,
+                    data: gemeente,
                     token: token,
                 }
                 res.json(response);

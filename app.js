@@ -6,9 +6,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors');
-// const sessions = require('express-session');
-
-// const oneDay = 1000 * 60 * 60 * 24;
 
 
 const indexRouter = require('./routes/index');
@@ -19,7 +16,7 @@ const creatiesRouter = require('./routes/creaties');
 
 dotenv.config();
 
-const mongoLocal = "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.8.1";
+const mongoLocal = "mongodb://localhost:27017/";
 try {
   mongoose.connect(process.env.MONGO_DB || mongoLocal);
   console.log('MongoDB connected');
@@ -48,13 +45,6 @@ const corsOptions = {
   ]
 }
 app.use(cors(corsOptions));
-
-// app.use(sessions({
-//   secret: production.env.JWT_SECRET,
-//   saveUninitialized: false,
-//   cookie: { maxAge: oneDay },
-//   resave: false,
-// }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

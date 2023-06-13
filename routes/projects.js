@@ -7,7 +7,7 @@ const { loginRequired } = require('./../middleware/auth');
 router.get('/', projectController.index);
 
 // GET project by id
-router.get('/:id', projectController.getProjectById);
+router.get('/:id', loginRequired, projectController.getProjectById);
 
 // Add new project
 router.post('/new', projectController.addProject);

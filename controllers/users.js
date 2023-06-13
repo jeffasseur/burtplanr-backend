@@ -112,19 +112,10 @@ const register = async (req, res) => {
         res.json(response);
     }
 
-    let burger = new Burger();
-
-    burger.firstname = req.body.firstname;
-    burger.lastname = req.body.lastname;
-    burger.email = req.body.email;
-    burger.postalcode = req.body.postalcode;
-    burger.city = req.body.city;
-    burger.street = req.body.street;
-    burger.houseNumber = req.body.houseNumber;
-    burger.dateOfRegistration = Date.now();
-
     //password handling
     if (req.body.password === req.body.passwordConfirm) {
+
+        let burger = new Burger();
 
         const password = req.body.password
 
@@ -133,6 +124,16 @@ const register = async (req, res) => {
 
         //set user password to hashed password
         burger.password = await bcrypt.hash(password, salt);
+
+        burger.firstname = req.body.firstname;
+        burger.lastname = req.body.lastname;
+        burger.email = req.body.email;
+        burger.postalcode = req.body.postalcode;
+        burger.city = req.body.city;
+        burger.street = req.body.street;
+        burger.houseNumber = req.body.houseNumber;
+        burger.image = null;
+        burger.dateOfRegistration = Date.now();
 
         //save user
         await burger.save();

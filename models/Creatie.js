@@ -21,6 +21,12 @@ const CreatieSchema = new mongoose.Schema(
             modelName: { type: String, required: true },
         }],
         dateOfCreation: { type: Date },
+        votes: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Burger'
+            }
+        ],
     }
 );
 

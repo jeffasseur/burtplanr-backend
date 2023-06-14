@@ -13,6 +13,7 @@ const burgersRouter = require('./routes/burgers');
 const gemeentesRouter = require('./routes/gemeentes');
 const projectsRouter = require('./routes/projects');
 const creatiesRouter = require('./routes/creaties');
+const buurtplanrRouter = require('./routes/buurtplanr');
 
 dotenv.config();
 
@@ -41,7 +42,7 @@ const corsOptions = {
     'http://app.buurtplanr.com',
     'https://app.buurtplanr.com',
     'https://www.app.buurtplanr.com',
-    'http://www.buurtplanr.com'
+    'http://www.buurtplanr.com',
   ]
 }
 app.use(cors(corsOptions));
@@ -62,6 +63,7 @@ app.use('/burgers', burgersRouter);
 app.use('/gemeentes', gemeentesRouter);
 app.use('/projects', projectsRouter);
 app.use('/creaties', creatiesRouter);
+app.use('/buurtplanr', buurtplanrRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

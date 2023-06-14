@@ -115,7 +115,6 @@ const register = async (req, res) => {
     //password handling
     if (req.body.password === req.body.passwordConfirm) {
 
-        let burger = new Burger();
 
         const password = req.body.password
 
@@ -123,24 +122,25 @@ const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
 
         //set user password to hashed password
-        burger.password = await bcrypt.hash(password, salt);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        burger.firstname = req.body.firstname;
-        burger.lastname = req.body.lastname;
-        burger.email = req.body.email;
-        burger.postalcode = req.body.postalcode;
-        burger.city = req.body.city;
-        burger.street = req.body.street;
-        burger.houseNumber = req.body.houseNumber;
-        burger.image = null;
-        burger.dateOfRegistration = Date.now();
-
-        //save user
-        await burger.save();
+        //create user
+        const burger = await Burger.create({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            postalcode: req.body.postalcode,
+            city: req.body.city,
+            street: req.body.street,
+            houseNumber: req.body.houseNumber,
+            password: hashedPassword,
+            image: null,
+            dateOfRegistration: Date.now()
+        });
 
         let response = {
             status: "success",
-            message: burger,
+            data: burger,
         }
         res.json(response);
     }
@@ -169,9 +169,69 @@ const logout = async (req, res) => {
 // update user
 
 // wachtwoord wijzigen
+const changePassword = async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+        return res.json({
+            status: 'error',
+            message: 'Vul alle velden in.'
+        });
+    }
+
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token) {
+        return res.json({
+            status: 'error',
+            message: 'Je bent niet ingelogd.'
+        });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!decoded) {
+        return res.json({
+            status: 'error',
+            message: 'Je bent niet ingelogd.'
+        });
+    }
+
+    try {
+        const burger = await Burger.findById(decoded._id);
+
+        bcrypt.compare(oldPassword, burger.password, async (err, match) => {
+            if (err) {
+                return res.json({
+                    status: 'error',
+                    message: 'Wachwoorden komen niet overeen.'
+                });
+            }
+
+            if (match) {
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+                burger = await Burger.findByIdAndUpdate(decoded._id, { password: hashedPassword }, { new: true });
+
+                return res.json({
+                    status: 'success',
+                    data: burger,
+                    message: 'Wachtwoord is gewijzigd.'
+                });
+            }
+        });
+    }
+    catch (error) {
+        return res.json({
+            status: 'error',
+            message: 'Er is iets misgelopen.'
+        });
+    }
+};
 
 module.exports.index = index;
 module.exports.getBurgerById = getBurgerById;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.register = register;
+module.exports.changePassword = changePassword;

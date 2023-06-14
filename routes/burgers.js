@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const burgerController = require('./../controllers/users');
-const { loginRequired } = require('./../middleware/auth');
+const { loginRequired } = require('./../middleware/auth/burger');
 
 /* GET users listing. */
 router.get('/', burgerController.index);
@@ -17,5 +17,8 @@ router.post('/register', burgerController.register);
 
 // logout route
 router.get('/logout', loginRequired, burgerController.logout);
+
+// change password route
+router.post('/change-password', burgerController.changePassword);
 
 module.exports = router;

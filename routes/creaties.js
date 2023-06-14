@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const creatieController = require('../controllers/creatie');
-// const { loginRequired } = require('./../middleware/auth/burger');
+//// const { loginRequired } = require('./../middleware/auth/burger');
 // const { adminrequired } = require('./../middleware/auth/admin');
 
 /* GET creations */

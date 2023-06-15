@@ -134,7 +134,7 @@ const register = async (req, res) => {
             street: req.body.street,
             houseNumber: req.body.houseNumber,
             password: hashedPassword,
-            image: null,
+            image: '/img/square.png',
             dateOfRegistration: Date.now()
         });
 

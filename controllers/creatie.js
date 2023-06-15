@@ -5,18 +5,26 @@ const jwt = require('jsonwebtoken');
 
 // index
 const index = async (req, res) => {
-    const creaties = await Creatie
-        .find()
-        .populate('project')
-        .populate('burger');
+    try {
+        const creaties = await Creatie
+            .find()
+            .populate('project')
+            .populate('burger');
 
-    if (creaties) {
-        let response = {
-            status: "success",
-            data: creaties,
+        if (creaties) {
+            let response = {
+                status: "success",
+                data: creaties,
+            }
+            res.json(response);
+        } else {
+            let response = {
+                status: "error",
+                message: "Er zijn geen creaties gevonden."
+            }
+            res.json(response);
         }
-        res.json(response);
-    } else {
+    } catch (error) {
         let response = {
             status: "error",
             message: "Er zijn geen creaties gevonden."

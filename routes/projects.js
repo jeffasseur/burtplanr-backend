@@ -6,6 +6,8 @@ const { loginRequired } = require('./../middleware/auth/burger');
 /* GET all projects */
 router.get('/', projectController.index);
 
+router.get('/voting', projectController.getProjectsForVoting);
+
 // GET project by id
 router.get('/:id', projectController.getProjectById);
 

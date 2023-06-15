@@ -29,6 +29,33 @@ const index = async (req, res) => {
     }
 };
 
+const getProjectsForVoting = async (req, res) => {
+    try {
+        const projects = await Project.find({ fase: "Fase 3: Stemmen" });
+
+        if (!projects) {
+            let response = {
+                status: "error",
+                message: "Er zijn geen projecten gevonden."
+            }
+            res.json(response);
+        }
+
+        let response = {
+            status: "success",
+            data: projects,
+        }
+        res.json(response);
+    }
+    catch (error) {
+        let response = {
+            status: "error",
+            message: "Er zijn geen projecten gevonden."
+        }
+        res.json(response);
+    }
+}
+
 const getProjectById = async (req, res) => {
     let id = req.params.id;
 
@@ -104,6 +131,7 @@ const deleteProject = async (req, res) => {
 }
 
 module.exports.index = index;
+module.exports.getProjectsForVoting = getProjectsForVoting;
 module.exports.addProject = addProject;
 module.exports.getProjectById = getProjectById;
 module.exports.updateProjectById = updateProjectById;

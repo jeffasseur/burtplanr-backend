@@ -29,6 +29,35 @@ const index = async (req, res) => {
     }
 };
 
+const getProjectsForHome = async (req, res) => {
+    try {
+        const projects = await Project.find({ fase: { $ne: "Fase 0: Wachten tot opstart" } });
+
+        if (!projects) {
+            let response = {
+                status: "error",
+                message: "Er zijn geen projecten gevonden."
+            }
+            res.json(response);
+        }
+
+        console.log(projects)
+
+        let response = {
+            status: "success",
+            data: projects,
+        }
+        res.json(response);
+    }
+    catch (error) {
+        let response = {
+            status: "error",
+            message: "Error: Er zijn geen projecten gevonden."
+        }
+        res.json(response);
+    }
+}
+
 const getProjectsForVoting = async (req, res) => {
     try {
         const projects = await Project.find({ fase: "Fase 3: Stemmen" });
@@ -132,6 +161,7 @@ const deleteProject = async (req, res) => {
 
 module.exports.index = index;
 module.exports.getProjectsForVoting = getProjectsForVoting;
+module.exports.getProjectsForHome = getProjectsForHome;
 module.exports.addProject = addProject;
 module.exports.getProjectById = getProjectById;
 module.exports.updateProjectById = updateProjectById;

@@ -91,6 +91,54 @@ const getCreationsByProjectId = async (req, res) => {
     }
 }
 
+// get creation with highest amount of votes based on project id
+const getWinningCreationByProjectId = async (req, res) => {
+    try {
+        const projectObject = await Project.findById(req.params.projectId);
+
+        if (!projectObject) {
+            let response = {
+                status: "error",
+                message: "Geen project gevonden."
+            }
+            res.json(response);
+        }
+
+        if (projectObject.fase != "Fase 4: Vervolg") {
+            let response = {
+                status: "error",
+                message: "Project is niet in fase 4."
+            }
+            res.json(response);
+        }
+
+        const creatie = await Creatie.find({ project: projectObject })
+            .populate(['project'])
+            .sort({ 'votes.length': -1 })
+            .limit(1);
+
+        if (!creatie) {
+            let response = {
+                status: "error",
+                message: "Geen creaties gevonden."
+            }
+            res.json(response);
+        }
+
+        let response = {
+            status: "success",
+            data: creatie
+        }
+        res.json(response);
+    } catch (err) {
+        let response = {
+            status: "error",
+            message: "Er is iets misgelopen."
+        }
+        res.json(response);
+    }
+}
+
 const getCreationsByBurgerId = async (req, res) => {
     const burgerId = req.params.id;
     console.log(burgerId)
@@ -306,6 +354,7 @@ module.exports.index = index;
 module.exports.getCreationById = getCreationById;
 module.exports.getCreationsByProjectId = getCreationsByProjectId;
 module.exports.getCreationsByBurgerId = getCreationsByBurgerId;
+module.exports.getWinningCreationByProjectId = getWinningCreationByProjectId;
 module.exports.getCreationByProjectIdAndBurgerId = getCreationByProjectIdAndBurgerId;
 module.exports.addCreation = addCreation;
 module.exports.updateCreationById = updateCreationById;

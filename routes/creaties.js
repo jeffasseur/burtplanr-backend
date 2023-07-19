@@ -16,6 +16,9 @@ router.get('/:projectId', creatieController.getCreationsByProjectId);
 // // GET all creations by project id for voting
 router.get('/voting/:projectId', creatieController.getCreationsByProjectId);
 
+// GET winning creation by project id
+router.get('/voting/winner/:projectId', creatieController.getWinningCreationByProjectId);
+
 // GET all creations by burger id
 router.get('/burger/:id', creatieController.getCreationsByBurgerId);
 

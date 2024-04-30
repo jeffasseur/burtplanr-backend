@@ -17,13 +17,13 @@ const buurtplanrRouter = require('./routes/buurtplanr');
 
 dotenv.config();
 
-const mongoLocal = "mongodb://localhost:27017/";
+const mongoLocal = "mongodb://localhost:27017/buurtplanr";
 try {
-  mongoose.connect(process.env.MONGO_DB || mongoLocal);
+  mongoose.connect(/*process.env.MONGO_DB ||*/ mongoLocal);
   console.log('MongoDB connected');
 } catch (error) {
   console.log('MongoDB connection failed');
-  handleError(process.env.MONGO_DB || mongoLocal, error);
+  handleError(/*process.env.MONGO_DB ||*/ mongoLocal, error);
 }
 
 const app = express();
